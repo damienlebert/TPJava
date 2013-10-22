@@ -23,15 +23,22 @@ public class UtilisateurService {
         utilisateur.setPrenom(prenom);
         utilisateur.setAge(age);
         utilisateur.setMur(mur);
+        mur.setProprietaire(utilisateur);
         
         return utilisateur;
     }
     
-    public static Relation creerRelation(Utilisateur premierUtilisateur, Utilisateur deuxiemeUtilisateur){
+    public static Relation creerRelation(Utilisateur premierUtilisateur, Utilisateur secondUtilisateur){
    
+        Relation relation = new Relation();
         
+        relation.setPremierUtilisateur(premierUtilisateur);
+        relation.setSecondUtilisateur(secondUtilisateur);
+        relation.setType("Amis");
+        premierUtilisateur.ajouterRelation(relation);
+        secondUtilisateur.ajouterRelation(relation);
         
-        
+        return relation;
     }
     
 }

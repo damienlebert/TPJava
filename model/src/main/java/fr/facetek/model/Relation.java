@@ -46,4 +46,23 @@ public class Relation {
         this.type = type;
     }
     
+    @Override
+    public String toString(){
+    
+        return(premierUtilisateur.getEtatCivil()+ " et " +  secondUtilisateur.getEtatCivil() + " sont " + this.type); 
+    }
+    
+    public String toString(Utilisateur utilisateur){
+        
+        String result;
+        
+        if (this.premierUtilisateur.equals(utilisateur)){
+            result = premierUtilisateur.getEtatCivil() + " est " + this.type + " avec " + secondUtilisateur.getEtatCivil();
+        } else{
+           result = secondUtilisateur.getEtatCivil() + " est " + this.type + " avec " + premierUtilisateur.getEtatCivil();
+        }
+    
+        return(result); 
+    }
+    
 }

@@ -6,6 +6,8 @@ package fr.facetek.app;
 
 
 import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import fr.facetek.model.*;
 
 /**
  *
@@ -13,8 +15,13 @@ import org.junit.Test;
  */
 public class UtilisateurServiceTest {
     @Test
-    public void testUtilisateur(String testName) {
-
+    public void testUtilisateur() {
+       
+     Utilisateur unTest = UtilisateurService.creerUtilisateur("Lebert", "Damien", 37);   
+     Utilisateur deuxTest = UtilisateurService.creerUtilisateur("The", "Naab", 18);   
+     Relation relation = UtilisateurService.creerRelation(unTest, deuxTest);
         
+        System.out.println(relation.toString());
+        assertNotNull("Les utilisateurs n'ont pas été trouvé", relation.toString().matches(unTest.getEtatCivil() + " " + deuxTest.getEtatCivil() + " sont " + relation.getType()));
     }    
 }

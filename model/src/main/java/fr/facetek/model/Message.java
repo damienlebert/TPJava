@@ -4,7 +4,10 @@
  */
 package fr.facetek.model;
 
+import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 
@@ -14,16 +17,18 @@ import java.util.Date;
  */
 public class Message {
     
-    private String titre;
+    private Utilisateur auteur;
     private String contenu;
     private Date date;
+    private Mur mur;
+    private List<Commentaire> commentaires = new ArrayList<Commentaire>();
 
-    public String getNom() {
+    public Utilisateur getAuteur() {
 
-        return this.titre;
+        return this.auteur;
     }
 
-    public String getPrenom() {
+    public String getContenu() {
 
         return this.contenu;
     }
@@ -32,10 +37,15 @@ public class Message {
 
         return this.date;
     }
+    
+    public Mur getMur() {
 
-    public void setNom(String nom) {
+        return this.mur;
+    }
 
-        this.titre = nom;
+    public void setAuteur(Utilisateur auteur) {
+
+        this.auteur = auteur;
     }
     
     public void setContenu(String contenu) {
@@ -47,5 +57,67 @@ public class Message {
 
         this.date = date;
     }
+    public void setMur(Mur mur) {
+
+        this.mur = mur;
+    }
+    
+    @Override
+    public String toString(){
+        String result = "Message de " + this.auteur.getEtatCivil() + "\n" ;
+        result += this.date + "\n";
+        result += this.contenu + "\n";
+        
+        for (Commentaire commentaire : this.commentaires){
+            
+            result += commentaire.toString();
+        }
+        
+        return result;
+    }
+    
+    
+    //Gestion commentaires 
+    
+    public List<Commentaire> getCommentaire(){
+        
+        return this.commentaires;
+    }
+    
+    
+    public void setCommentaire(List<Commentaire> commentaires){
+        
+        this.commentaires = commentaires;
+    }
+    
+    public void ajouterCommentaire(Commentaire commentaire){
+        
+        this.commentaires.add(commentaire);
+    }
+    
+    public Commentaire getLastCommentaire(){
+        
+        return this.commentaires.get(commentaires.size()-1);
+    }
+    
+    public Commentaire getMessage(int index){
+        
+        return this.commentaires.get(index);
+    }
+    
+    public boolean contientCommentaire(Commentaire commentaire){
+        boolean result = false;
+        for (Commentaire commentaireMessage : this.commentaires){
+            if (commentaireMessage.equals(commentaire)){
+                
+             result = true;   
+            }
+        }
+        return result;
+    }
+    
+    
+
+    
     
 }
