@@ -4,16 +4,12 @@
  */
 package fr.facetek.app;
 
-import fr.facetek.model.Message;
 import fr.facetek.model.Utilisateur;
 import java.io.IOException;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
-import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -21,23 +17,16 @@ import java.util.Scanner;
  *
  * @author dlebert
  */
-public class CsvService {
+public class CsvService implements CsvInterface{
     
-    public static List<Utilisateur> lireCsv(String fileName) throws IOException{
-        
+    @Override
+    public List<Utilisateur> getUtilisateurs(String fileName) throws IOException{
         
         List<Utilisateur> utilisateurs = new ArrayList<>();
         
         FileSystem fs = FileSystems.getDefault();
-
         Path path = fs.getPath(fileName);
         
-        try{
-            System.out.println(path.toRealPath());
-        }
-        catch(NoSuchFileException ex){
-	  System.out.println(path.toString()+" not found");
-	}
         try (Scanner scanner = new Scanner(path)) {
             scanner.useDelimiter(System.getProperty("line.separator"));
             //Skiping first line (properties)
@@ -46,7 +35,6 @@ public class CsvService {
             while(scanner.hasNext()){
                 //parse line to get users
                 Utilisateur utilisateur = parseCSVLine(scanner.next());
-                System.out.println(utilisateur.getAllInfos());
                 utilisateurs.add(utilisateur);
             }
         }
@@ -60,14 +48,15 @@ public class CsvService {
          scanner.useDelimiter("\\s*;\\s*");
          // Login
          String login = scanner.next();
-         // Nom
+         // Nom en majuscule
          String nom = scanner.next().toUpperCase();
-         //Prenom
+         //Prenom, premiere lettre en majuscule
          String prenom = scanner.next();
          prenom = prenom.replaceFirst(".",(prenom.charAt(0)+"").toUpperCase());
-         // Email
+         // Email ( login@astek.fr )
          String mail = login + "@astek.fr";
-         Utilisateur utilisateur = UtilisateurService.creerUtilisateur(nom, prenom, 20);
+         
+         Utilisateur utilisateur = UtilisateurService.creerUtilisateur(nom, prenom, login, mail);
          utilisateur.setLogin(login);
          utilisateur.setMail(mail);
          

@@ -21,6 +21,11 @@ public class Mur {
         return this.messages;
     }
     
+    public Message getMessage(int index){
+        
+        return this.messages.get(index);
+    }
+    
     public Utilisateur getProprietaire(){
         
         return this.proprietaire;
@@ -47,10 +52,7 @@ public class Mur {
         return this.messages.get(messages.size()-1);
     }
     
-    public Message getMessage(int index){
-        
-        return this.messages.get(index);
-    }
+
     
     public boolean contientMessage(Message message){
         boolean result = false;

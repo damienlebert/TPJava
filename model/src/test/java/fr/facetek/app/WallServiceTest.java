@@ -17,10 +17,11 @@ public class WallServiceTest {
     @Test
     public void testWall() {
        
-        Utilisateur moi = UtilisateurService.creerUtilisateur("Lebert", "Damien", 37); 
-        Utilisateur unAmi = UtilisateurService.creerUtilisateur("Super", "Poto", 25);  
+        Utilisateur moi = UtilisateurService.creerUtilisateur("Lebert", "Damien"); 
+        Utilisateur unAmi = UtilisateurService.creerUtilisateur("Super", "Poto");  
         UtilisateurService.creerRelation(moi, unAmi);
-        Utilisateur unInconnu = UtilisateurService.creerUtilisateur("Justin", "Inconnu", 28);
+        Utilisateur unInconnu = UtilisateurService.creerUtilisateur("Justin", "Inconnu");
+        UtilisateurService.creerRelation(unInconnu, unAmi);
         //Creation d'un message sur son propre mur
         
         String textMessage = "Je suis un super message de test sur mon propre mur";
@@ -57,23 +58,35 @@ public class WallServiceTest {
         WallService.posterCommentaire(commentaire, message);
         assertTrue("Le commentaire n'a pas été posté correctement", message.contientCommentaire(commentaire));
         
-        //Création d'un message sur le mur de inconnu posté par inconnu
-        textMessage = "Je suis inconnu et j'écris sur mon propre mur";
+        //Création d'un message sur le mur de inconnu posté par un ami
+        textMessage = "Mon ami écrit sur le mur d'un inconnu";
+        message = WallService.creerMessage(unAmi, textMessage);
+        WallService.posterMessage(message, unInconnu);
+        
+        WallService.posterCommentaire(commentaire, message);
+        assertTrue("Je devrai pouvoir commenter le message d'un ami sur le mur d'un inconnu", message.contientCommentaire(commentaire));
+        
+         //Création d'un message sur le mur de inconnu posté par un inconnu
+        textMessage = "Un inconnu écrit sur sont propre mur...";
         message = WallService.creerMessage(unInconnu, textMessage);
         WallService.posterMessage(message);
         
         WallService.posterCommentaire(commentaire, message);
-        assertFalse("Il devrait être impossible de commenter un message sur le mur d'un inconnu", message.contientCommentaire(commentaire));
+        assertFalse("Je ne devrai pas pouvoir commenter le message d'un inconnu sur le mur d'un inconnu", message.contientCommentaire(commentaire));
         
+        
+        System.out.println("======================================================");
         System.out.println(moi.toString());
-        System.out.println(moi.showMur());
-        System.out.println(moi.showRelations());
+        System.out.println(UtilisateurService.showMur(moi));
+        System.out.println(UtilisateurService.showRelations(moi));
+        System.out.println("======================================================");
         System.out.println(unAmi.toString());
-        System.out.println(unAmi.showMur());
-        System.out.println(unAmi.showRelations());
+        System.out.println(UtilisateurService.showMur(unAmi));
+        System.out.println(UtilisateurService.showRelations(unAmi));
+        System.out.println("======================================================");
         System.out.println(unInconnu.toString());
-        System.out.println(unInconnu.showMur());
-        System.out.println(unInconnu.showRelations());
+        System.out.println(UtilisateurService.showMur(unInconnu));
+        System.out.println(UtilisateurService.showRelations(unInconnu));
         
         
         

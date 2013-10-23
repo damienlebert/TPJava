@@ -49,7 +49,7 @@ public class Relation {
     @Override
     public String toString(){
     
-        return(premierUtilisateur.getEtatCivil()+ " et " +  secondUtilisateur.getEtatCivil() + " sont " + this.type); 
+        return(premierUtilisateur.getEtatCivil()+ " et " +  secondUtilisateur.getEtatCivil() + " sont " + this.type + "\n"); 
     }
     
     public String toString(Utilisateur utilisateur){
@@ -61,7 +61,7 @@ public class Relation {
         } else{
            result = secondUtilisateur.getEtatCivil() + " est " + this.type + " avec " + premierUtilisateur.getEtatCivil();
         }
-    
+        result += "\n";
         return(result); 
     }
     

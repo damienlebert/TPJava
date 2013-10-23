@@ -17,9 +17,8 @@ public class Utilisateur {
     private String prenom;
     private String login;
     private String mail;
-    private int age;
     private Mur mur;
-    private List<Relation> relations = new ArrayList<Relation>();
+    private List<Relation> relations = new ArrayList<>();
 
     //Getter
     
@@ -42,11 +41,6 @@ public class Utilisateur {
 
         return this.mail;
     }
-
-    public int getAge() {
-
-        return this.age;
-    }
     
     public Mur getMur() {
 
@@ -56,6 +50,11 @@ public class Utilisateur {
     public List<Relation> getRelations(){
         
         return this.relations;
+    }
+    
+    public Relation getRelation( int index ){
+        
+        return this.relations.get( index );
     }
     
     //Setter
@@ -76,10 +75,7 @@ public class Utilisateur {
 
         this.mail = mail;
     }
-    public void setAge(int age) {
-
-        this.age = age;
-    }
+    
     public void setMur(Mur mur) {
 
         this.mur = mur;
@@ -116,16 +112,6 @@ public class Utilisateur {
         return (nomFormate + " "  + prenomFormate);
     }
     
-    public String getAllInfos(){
-        
-        String result = "Nom : " +this.nom + "\n";
-        result += "Prenom : " +this.prenom + "\n";
-        result += "Login : " +this.login + "\n";
-        result += "Mail : " +this.mail + "\n";
-        
-        return result;
-    }
-    
     @Override
     public String toString(){
         
@@ -136,25 +122,4 @@ public class Utilisateur {
         
         return result;
     }
-    
-    public String showMur(){
-        
-        return this.mur.toString();
-    }
-    
-    public String showRelations(){
-        String result = "Relations : \n";
-        if (this.relations.isEmpty()){
-            result += "Aucunes relations";
-        }
-        else{
-            for (Relation relation : this.relations){
-                result += relation.toString(this);
-            }
-        }
-        
-        
-        return result;
-    }
-    
 }

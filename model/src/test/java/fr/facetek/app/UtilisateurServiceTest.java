@@ -17,8 +17,8 @@ public class UtilisateurServiceTest {
     @Test
     public void testUtilisateur() {
        
-     Utilisateur unTest = UtilisateurService.creerUtilisateur("Lebert", "Damien", 37);   
-     Utilisateur deuxTest = UtilisateurService.creerUtilisateur("The", "Naab", 18);   
+     Utilisateur unTest = UtilisateurService.creerUtilisateur("Lebert", "Damien");   
+     Utilisateur deuxTest = UtilisateurService.creerUtilisateur("The", "Naab");   
      Relation relation = UtilisateurService.creerRelation(unTest, deuxTest);
         
         System.out.println(relation.toString());

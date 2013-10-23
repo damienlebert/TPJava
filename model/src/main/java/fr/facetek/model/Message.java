@@ -42,6 +42,16 @@ public class Message {
 
         return this.mur;
     }
+    
+    public List<Commentaire> getCommentaire(){
+        
+        return this.commentaires;
+    }
+    
+    public Commentaire getCommentaire( int index ){
+        
+        return this.commentaires.get(index);
+    }
 
     public void setAuteur(Utilisateur auteur) {
 
@@ -61,30 +71,7 @@ public class Message {
 
         this.mur = mur;
     }
-    
-    @Override
-    public String toString(){
-        String result = "Message de " + this.auteur.getEtatCivil() + "\n" ;
-        result += this.date + "\n";
-        result += this.contenu + "\n";
-        
-        for (Commentaire commentaire : this.commentaires){
-            
-            result += commentaire.toString();
-        }
-        
-        return result;
-    }
-    
-    
-    //Gestion commentaires 
-    
-    public List<Commentaire> getCommentaire(){
-        
-        return this.commentaires;
-    }
-    
-    
+
     public void setCommentaire(List<Commentaire> commentaires){
         
         this.commentaires = commentaires;
@@ -100,11 +87,6 @@ public class Message {
         return this.commentaires.get(commentaires.size()-1);
     }
     
-    public Commentaire getMessage(int index){
-        
-        return this.commentaires.get(index);
-    }
-    
     public boolean contientCommentaire(Commentaire commentaire){
         boolean result = false;
         for (Commentaire commentaireMessage : this.commentaires){
@@ -116,8 +98,19 @@ public class Message {
         return result;
     }
     
-    
-
+    @Override
+    public String toString(){
+        String result = "Message de " + this.auteur.getEtatCivil() + "\n" ;
+        result += this.date + "\n";
+        result += this.contenu + "\n";
+        
+        for (Commentaire commentaire : this.commentaires){
+            
+            result += commentaire.toString();
+        }
+        
+        return result;
+    }
     
     
 }

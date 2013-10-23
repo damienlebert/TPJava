@@ -56,10 +56,13 @@ public class WallService {
         return commentaire;
     }
     
+    // Poster un commentaire sur un message.
+    // Retourne un message d'erreur si l'auteur n'est ni ami avec le propriétaire du mur sur lequel se trouve le message, ni ami avec l'auteur du message
     public static void posterCommentaire(Commentaire commentaire, Message message){
         Utilisateur source = commentaire.getAuteur();
         Utilisateur cible = message.getMur().getProprietaire();
-        if (cible.enRelationAvec(source) || source.equals(cible)){
+        if (source.equals(cible) || cible.enRelationAvec(source) || source.enRelationAvec(message.getAuteur()) || source.equals(message.getAuteur())){
+            
             message.ajouterCommentaire(commentaire);
             commentaire.setMessage(message);
         } else{

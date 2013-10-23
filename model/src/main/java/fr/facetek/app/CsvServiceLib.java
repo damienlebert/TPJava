@@ -15,10 +15,10 @@ import java.util.List;
  *
  * @author dlebert
  */
-public class CsvServiceLib {
+public class CsvServiceLib implements CsvInterface{
     
-    
-    public static List<Utilisateur> lireCsv(String fileName) throws IOException{
+    @Override
+    public List<Utilisateur> getUtilisateurs(String fileName) throws IOException{
        
     
             List<Utilisateur> utilisateurs = new ArrayList<>();
@@ -38,11 +38,10 @@ public class CsvServiceLib {
                 prenom = prenom.replaceFirst(".",(prenom.charAt(0)+"").toUpperCase());
                 // Email
                 String mail = login + "@astek.fr";
-                Utilisateur utilisateur = UtilisateurService.creerUtilisateur(nom, prenom, 20);
+                Utilisateur utilisateur = UtilisateurService.creerUtilisateur(nom, prenom, login, mail);
                 utilisateur.setLogin(login);
                 utilisateur.setMail(mail);
-                
-                System.out.println(utilisateur.getAllInfos());
+               
                 utilisateurs.add(utilisateur);
             }
     
