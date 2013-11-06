@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class Mur {
     
-    private List<Message> messages = new ArrayList<Message>();
+    private List<Message> messages = new ArrayList<>();
     private Utilisateur proprietaire;
     
     public List<Message> getMessages(){
