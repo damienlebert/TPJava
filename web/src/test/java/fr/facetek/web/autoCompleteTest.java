@@ -4,6 +4,7 @@
  */
 package fr.facetek.web;
 
+import fr.facetek.web.error.SearchException;
 import java.util.List;
 import java.util.Map;
 import org.apache.solr.client.solrj.response.TermsResponse;
@@ -30,11 +31,14 @@ public class autoCompleteTest {
                solrTermTest("bra");
                 solrTermTest("arr");
                 */
+     
                 searchEn("available");
                 
             } catch (SolrServerException ex) {
                 Logger.getLogger(autoCompleteTest.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
+                Logger.getLogger(autoCompleteTest.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SearchException ex) {
                 Logger.getLogger(autoCompleteTest.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

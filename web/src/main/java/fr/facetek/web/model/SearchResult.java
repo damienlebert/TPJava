@@ -14,6 +14,7 @@ import java.util.List;
 public class SearchResult {
     
     private List<MatchedDocument> matchedDocuments = new ArrayList<>();
+    private int nbrDocument;
 
     /**
      * @return the matchedDocuments
@@ -27,11 +28,15 @@ public class SearchResult {
      */
     public void setMatchedDocuments(List<MatchedDocument> matchedDocuments) {
         this.matchedDocuments = matchedDocuments;
+        this.nbrDocument = matchedDocuments.size();
     }
     
     public void addMatchedDocument(MatchedDocument matchedDocument){
         this.matchedDocuments.add(matchedDocument);
+        this.nbrDocument++;
     }
     
-    
+    public int getNbrDocument(){
+        return nbrDocument;
+    }
 }

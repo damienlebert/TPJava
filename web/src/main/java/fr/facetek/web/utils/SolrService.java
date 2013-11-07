@@ -4,6 +4,7 @@
  */
 package fr.facetek.web.utils;
 
+import fr.facetek.web.error.SearchException;
 import fr.facetek.web.model.MatchedDocument;
 import fr.facetek.web.model.SearchResult;
 import java.io.File;
@@ -11,7 +12,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
@@ -21,6 +21,7 @@ import org.apache.solr.client.solrj.request.QueryRequest;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.TermsResponse;
 import org.apache.solr.client.solrj.response.TermsResponse.Term;
+import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.util.ContentStream;
 import org.apache.solr.common.util.ContentStreamBase;
 
@@ -30,7 +31,7 @@ import org.apache.solr.common.util.ContentStreamBase;
  */
 public class SolrService {
     
- 
+    private static final SolrServer server = new HttpSolrServer("http://localhost:8983/solr");
     
     /**
     * Method to index all types of files into SolrService. 
@@ -43,7 +44,6 @@ public class SolrService {
     
     public static void indexFile(String fileName, String solrId) throws SolrServerException, IOException{
         
-        SolrServer server = new HttpSolrServer("http://localhost:8983/solr");
         server.ping();
         ContentStreamUpdateRequest up = new ContentStreamUpdateRequest("/update/extract");
         ContentStreamBase.FileStream csb = new ContentStreamBase.FileStream(new File(fileName)); 
@@ -63,7 +63,6 @@ public class SolrService {
      */
     public static void deleteAllDocument() throws SolrServerException, IOException{
        
-        SolrServer server = new HttpSolrServer("http://localhost:8983/solr");
         server.deleteByQuery( "*:*" );
         server.commit(); 
     }
@@ -74,8 +73,6 @@ public class SolrService {
      * @throws IOException 
      */
     public static Map<String , List<Term>> getAutoComplete(String prefix) throws SolrServerException, IOException{
-       
-        SolrServer server = new HttpSolrServer("http://localhost:8983/solr");
         
         SolrQuery query = new SolrQuery();
         query.setRequestHandler("/terms");
@@ -107,34 +104,51 @@ public class SolrService {
       }
     
     
-    
-    public static SearchResult searchEn(String search) throws SolrServerException, IOException{
-
+    /**
+     * Send the search query (parameter search) to the solr server and return the result   
+     * @param search
+     * @return {@link SearchResult}
+     * @throws SolrServerException
+     * @throws IOException 
+     */
+    public static SearchResult searchEn(String search) throws SolrServerException, IOException, SearchException{
+        
+        // Var to return
         SearchResult result = new SearchResult();
         
-        SolrServer server = new HttpSolrServer("http://localhost:8983/solr");
-
+        // Creating the query
         SolrQuery query = new SolrQuery();
         query.setRequestHandler("/searchEn");
         query.setQuery(search);
         QueryRequest request = new QueryRequest(query);
+        
+        // Sending the query and retrieving response
         QueryResponse response = request.process(server);   
-
-        for (Map.Entry<String,Map<String,List<String>>> doc : response.getHighlighting().entrySet()){
+        
+        // Analysing response from solr 
+        if (response.getResults().isEmpty()){
+            throw new SearchException("Aucun document ne correspond aux termes de recherche spécifiés");
+        }
+        
+        //Retrieving matched document ids
+        for (SolrDocument curDocument : response.getResults()){
             
-            MatchedDocument curDocument = new MatchedDocument();
-            
-            curDocument.setId(doc.getKey());
-            
-            Map< String, List< String > > documentHighlighting = doc.getValue();
-            for (Map.Entry<String,List<String>> hl : documentHighlighting.entrySet()){
+            MatchedDocument curMatchedDocument = new MatchedDocument();
+            String documentId = "";
+            if (curDocument.containsKey("id")){
                 
-                curDocument.setHighlights(hl.getValue());
+                documentId = (String)curDocument.get("id");
             }
-            result.addMatchedDocument(curDocument);
+            curMatchedDocument.setId(documentId);
+            
+            // Retrieving highlights per document
+            Map< String, List< String > > curDocumentHighlighting = response.getHighlighting().get(curMatchedDocument.getId());
+            for (Map.Entry<String,List<String>> hl : curDocumentHighlighting.entrySet()){
+                
+                curMatchedDocument.setHighlights(hl.getValue());
+            }
+            result.addMatchedDocument(curMatchedDocument);
         }
         return result;
     }
-    
-    
 }

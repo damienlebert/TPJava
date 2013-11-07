@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package fr.facetek.web.servlets;
+import fr.facetek.web.error.SearchException;
 import fr.facetek.web.model.SearchResult;
 import static fr.facetek.web.utils.SolrService.*;
 
@@ -13,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.solr.client.solrj.SolrServerException;
 
 /**
  *
@@ -31,19 +33,26 @@ public class SolrSearchServlet extends HttpServlet {
     }
     
     @Override
-    public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException{
+    public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
         /* Traitement des données du formulaire */
-        String recherche = request.getParameter( CHAMP_RECHERCHE );
-
+        String search = request.getParameter( CHAMP_RECHERCHE );
+        
         // Reset all
         try {
-            //SolrService.deleteAllDocument();
-            SearchResult result = searchEn(recherche);
+
+            SearchResult result = searchEn(search);
             request.setAttribute("result", result);    
-            this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
         
-        } catch (Exception ex) {
+        } catch (SolrServerException ex) {
+            
             Logger.getLogger(ServletHelloWorld.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("error", "An error occured, please retry your query");
+            
+        } catch (SearchException e ){
+            
+            request.setAttribute("error", e.getMessage());
         }
+        
+        this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
     }
 }
