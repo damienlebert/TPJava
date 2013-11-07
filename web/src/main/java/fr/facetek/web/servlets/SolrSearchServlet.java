@@ -45,7 +45,7 @@ public class SolrSearchServlet extends HttpServlet {
         
         } catch (SolrServerException ex) {
             
-            Logger.getLogger(ServletHelloWorld.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SolrIndexServlet.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("error", "An error occured, please retry your query");
             
         } catch (SearchException e ){

@@ -20,6 +20,15 @@
     </head>
     <body>
     <div class="container"> 
+        
+            
+            <ul class="nav nav-pills">
+                <li class="">
+                    <a href="SolrIndex">Indexer un fichier</a>
+                </li>    
+                    
+            </ul>
+
         <form method="post" action="SolrSearch">
             <fieldset>
                 <div class="text-center">

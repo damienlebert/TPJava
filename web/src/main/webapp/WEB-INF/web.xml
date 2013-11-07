@@ -2,24 +2,16 @@
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
     <display-name>web</display-name>
     <servlet>
-        <servlet-name>ServletHelloWorld</servlet-name>
-        <servlet-class>fr.facetek.web.servlets.ServletHelloWorld</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>testTermsServlet</servlet-name>
-        <servlet-class>fr.facetek.web.servlets.testTermsServlet</servlet-class>
+        <servlet-name>SolrIndexServlet</servlet-name>
+        <servlet-class>fr.facetek.web.servlets.SolrIndexServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SolrSearch</servlet-name>
         <servlet-class>fr.facetek.web.servlets.SolrSearchServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>ServletHelloWorld</servlet-name>
-        <url-pattern>/indexAction</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>testTermsServlet</servlet-name>
-        <url-pattern>/testTerms</url-pattern>
+        <servlet-name>SolrIndexServlet</servlet-name>
+        <url-pattern>/SolrIndex</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SolrSearch</servlet-name>
@@ -31,6 +23,6 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>SolrSearch</welcome-file>
     </welcome-file-list>
 </web-app>

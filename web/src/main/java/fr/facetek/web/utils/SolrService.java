@@ -68,43 +68,6 @@ public class SolrService {
     }
     
     /**
-     * Method to retrieve terms contain in all document matching a specific prefix
-     * @throws SolrServerException
-     * @throws IOException 
-     */
-    public static Map<String , List<Term>> getAutoComplete(String prefix) throws SolrServerException, IOException{
-        
-        SolrQuery query = new SolrQuery();
-        query.setRequestHandler("/terms");
-        query.setTermsPrefix(prefix);
-        QueryRequest request = new QueryRequest(query);
-        Map<String , List<Term>> terms = request.process(server).getTermsResponse().getTermMap();
-        
-        return terms; 
-    }
-
-    public static String showTerms (Map<String , List<Term>> termsMap) throws SolrServerException, IOException{
-          
-        String result = "";
-        for(Map.Entry<String, List<TermsResponse.Term>> entry : termsMap.entrySet()) {
-            
-            String cle = entry.getKey();
-            List<Term> terms = entry.getValue();
-            // traitements
-            result += "Clé : " + cle + " -------------------------------------------<br />";
-            System.out.println(cle);
-            System.out.println(terms.size());
-            for (TermsResponse.Term term : terms){
-                result += term.getTerm() + "<br />";
-                System.out.println(term.getTerm());
-            }
-
-        }
-        return result;
-      }
-    
-    
-    /**
      * Send the search query (parameter search) to the solr server and return the result   
      * @param search
      * @return {@link SearchResult}
@@ -134,14 +97,10 @@ public class SolrService {
         for (SolrDocument curDocument : response.getResults()){
             
             MatchedDocument curMatchedDocument = new MatchedDocument();
-            String documentId = "";
-            if (curDocument.containsKey("id")){
-                
-                documentId = (String)curDocument.get("id");
-            }
-            curMatchedDocument.setId(documentId);
+
+            curMatchedDocument.setId((String)curDocument.get("id"));
             
-            // Retrieving highlights per document
+            // Retrieving highlights for the current document
             Map< String, List< String > > curDocumentHighlighting = response.getHighlighting().get(curMatchedDocument.getId());
             for (Map.Entry<String,List<String>> hl : curDocumentHighlighting.entrySet()){
                 
