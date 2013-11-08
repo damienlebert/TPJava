@@ -10,22 +10,18 @@
     <body>
     <div class="container"> 
             
-            <ul class="inline list-unstyled">
-                <li>
-                    <a class="menu" href="SolrIndex">Indexer un fichier</a>
-                </li>      
-            </ul>
+        <ul class="inline list-unstyled">
+            <li>
+                <a class="menu" href="SolrIndex">Indexer un fichier</a>
+            </li>      
+        </ul>
 
         <form role="form" class="SearchForm text-center" method="post" action="SolrSearch">
-
-
-                    
                     <img class="logo " src="./img/solr_logo.png" width="250px" /> 
                     <div class="form-group">    
                         <input  class="form-control" type="text" id="search" name="search" value="<c:out value="${param.search}" />" />
                     </div>          
                     <button class="btn btn-default" type="submit">Rechercher </button>
-
         </form>
         
         <c:if test="${!empty error}">

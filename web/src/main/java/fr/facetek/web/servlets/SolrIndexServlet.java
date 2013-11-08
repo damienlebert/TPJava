@@ -22,11 +22,28 @@ import org.apache.solr.client.solrj.SolrServerException;
 public class SolrIndexServlet extends HttpServlet {
     
     public static final String VUE = "/WEB-INF/solrIndex.jsp";
+    public static final String GET_ACTION = "action";
     public static final String CHAMP_FILE = "fileToExtract";
+
     
     @Override
-    public void service (HttpServletRequest request,  HttpServletResponse response ) throws ServletException, IOException{
-         List< String > solrDocumentList = new ArrayList<>();
+    public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException{
+         
+        String action = request.getParameter( GET_ACTION );
+        if (action != null){
+
+            if ( action.equals("indexall")){
+                try {
+                    indexFile();
+                    request.setAttribute("indexSuccess", "L'indexation à été efectué avec succès");
+
+                 } catch (SolrServerException ex) {
+                     Logger.getLogger(SolrIndexServlet.class.getName()).log(Level.SEVERE, null, ex);
+                 }
+             } 
+        }
+
+        List< String > solrDocumentList = new ArrayList<>();
         try{
             solrDocumentList = getListDocument();
             for( String curDocument : solrDocumentList){
@@ -41,10 +58,6 @@ public class SolrIndexServlet extends HttpServlet {
         request.setAttribute("toIndexDocuments", toIndexDocumentList);
         
         this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
-    }
-    @Override
-    public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException{
-         
        
     }
     
@@ -57,15 +70,7 @@ public class SolrIndexServlet extends HttpServlet {
         
         this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
         
-        
-        /*
-        try {
-            //SolrService.deleteAllDocument();
-            SolrService.indexFile(fileName, solrId);
-        } catch (Exception ex) {
-            Logger.getLogger(SolrIndexServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        * */
+       
     }
     
 }

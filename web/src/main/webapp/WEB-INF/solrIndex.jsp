@@ -9,7 +9,11 @@
 
     <body>
     <div class="container"> 
-        
+        <ul class="inline list-unstyled">
+            <li>
+                <a class="menu" href="SolrSearch">Recherche Solr</a>
+            </li>      
+        </ul>
         <section>
             <article>
                 <h1>Liste des documents contenus dans l'index Solr</h1>
@@ -49,24 +53,16 @@
                     </c:otherwise>
                 </c:choose>
                         
+                        
             </article>
-            
-    
+
         </section>
         
+        <button onclick="self.location.replace('SolrIndex?action=indexall');" class="btn btn-default"> Indexer les documents</button>
+        <br />
+        <br />
         
-        <form role="form"  method="post" action="SolrIndex">
-                <legend>Indexation d'un document via solr</legend>
-                
-                <div class="form-group">
-                    <label for="fileToExtract">Fichier a extraire</label>
-                    <input type="file" id="fileToExtract"name="fileToExtract">
-                    
-                </div>
-                
-                <button type="submit" class="btn btn-default"> Envoyer</button>
-           
-        </form>
+        <p class="alert-success"> <c:out value="${indexSuccess}" /></p>
     </div>    
     </body>
 </html>

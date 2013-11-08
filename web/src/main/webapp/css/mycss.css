@@ -14,7 +14,7 @@
 
 .menu:hover{
     text-decoration: none;
-    color:thistle;
+    color:slateblue;
     -webkit-transition: color 0.5s linear;
        -moz-transition: color 0.5s linear;
          -o-transition: color 0.5s linear;

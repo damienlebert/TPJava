@@ -33,6 +33,7 @@ import org.apache.solr.common.util.ContentStreamBase;
 public class SolrService {
     
     private static final SolrServer server = new HttpSolrServer("http://localhost:8983/solr");
+    private static final String dirFileToIndex = "C:/Travail/";
     
     /**
     * Method to index all types of files into SolrService. 
@@ -43,17 +44,20 @@ public class SolrService {
     */
 
     
-    public static void indexFile(String fileName, String solrId) throws SolrServerException, IOException{
+    public static void indexFile() throws SolrServerException, IOException{
         
-        server.ping();
+        List<String> listDocumentToIndex = getDocumentToIndex();
         ContentStreamUpdateRequest up = new ContentStreamUpdateRequest("/update/extract");
-        ContentStreamBase.FileStream csb = new ContentStreamBase.FileStream(new File(fileName)); 
-
-        up.addContentStream((ContentStream)csb);
-        up.setParam("literal.id", solrId);
-        //up.setParam("Content-type", "application/pdf");
-        up.setAction(AbstractUpdateRequest.ACTION.COMMIT, true, true);
-        server.request(up);
+        for ( String curDocument : listDocumentToIndex){
+            
+            ContentStreamBase.FileStream csb = new ContentStreamBase.FileStream(new File(dirFileToIndex+curDocument)); 
+            up.addContentStream((ContentStream)csb);
+            up.setParam("literal.id", curDocument);
+            //up.setParam("Content-type", "application/pdf");
+            up.setAction(AbstractUpdateRequest.ACTION.COMMIT, true, true);
+            server.request(up);
+        }
+       
     }
     
     /**
