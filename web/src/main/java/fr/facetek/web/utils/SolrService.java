@@ -8,7 +8,10 @@ import fr.facetek.web.error.SearchException;
 import fr.facetek.web.model.MatchedDocument;
 import fr.facetek.web.model.SearchResult;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -19,8 +22,6 @@ import org.apache.solr.client.solrj.request.AbstractUpdateRequest;
 import org.apache.solr.client.solrj.request.ContentStreamUpdateRequest;
 import org.apache.solr.client.solrj.request.QueryRequest;
 import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.client.solrj.response.TermsResponse;
-import org.apache.solr.client.solrj.response.TermsResponse.Term;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.util.ContentStream;
 import org.apache.solr.common.util.ContentStreamBase;
@@ -53,7 +54,6 @@ public class SolrService {
         //up.setParam("Content-type", "application/pdf");
         up.setAction(AbstractUpdateRequest.ACTION.COMMIT, true, true);
         server.request(up);
-        
     }
     
     /**
@@ -65,6 +65,42 @@ public class SolrService {
        
         server.deleteByQuery( "*:*" );
         server.commit(); 
+    }
+    
+    public static List< String > getListDocument() throws SolrServerException{
+        
+        List< String > listDocuments = new ArrayList<>();
+        
+        SolrQuery query = new SolrQuery("*:*");
+        query.setRequestHandler("/select");
+        query.setFields("id");
+        QueryRequest request = new QueryRequest(query);
+        
+        QueryResponse response = request.process(server);
+        if (!response.getResults().isEmpty()){
+            
+            for (SolrDocument curDocument : response.getResults()){
+                
+                listDocuments.add((String)curDocument.get("id"));
+            }
+        }
+        return listDocuments;
+    }
+    
+    public static List< String > getDocumentToIndex(){
+        
+        List<String> fileNameList = new ArrayList<>();
+        File dir = new File("C:/Travail");
+        File[] fileList = dir.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return name.toLowerCase().endsWith(".pdf");
+            }
+        });
+        for (File curFile : fileList){
+            fileNameList.add(curFile.getName().toLowerCase());
+        }
+        return fileNameList;
     }
     
     /**

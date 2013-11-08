@@ -3,3 +3,25 @@
     width:300px;
     margin: 20px auto;
 }
+
+.menu{
+    font-family: sans-serif;
+    font-size: 17px;
+    line-height: 19px;
+    color: #999;
+    font-weight: 200;
+}
+
+.menu:hover{
+    text-decoration: none;
+    color:thistle;
+    -webkit-transition: color 0.5s linear;
+       -moz-transition: color 0.5s linear;
+         -o-transition: color 0.5s linear;
+            transition: color 0.5s linear;
+}
+
+.SearchForm{
+    width:600px;
+    margin: 25px auto;
+}

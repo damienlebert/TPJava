@@ -4,40 +4,68 @@
     Author     : dlebert
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!doctype html>
-<html lang="fr">
-    <head>
-        <script type="text/javascript" src="./js/jquery-1.9.1.js"></script>
-        <script type="text/javascript" src="./js/jquery-ui-1.10.3.custom.js"></script>
-        <script type="text/javascript" src="./js/solr.js"></script>
-        
-        <link rel="stylesheet" type="text/css" media="screen" href="./css/jquery-ui-1.10.3.custom.css" />
-        <link rel="stylesheet" type="text/css" media="screen" href="./bootstrap/css/bootstrap.css" />
-        <link rel="stylesheet" type="text/css" media="screen" href="./css/mycss.css" />
-        <meta charset="utf-8" />
-        <title>Recherche</title>
-    </head>
+
+<jsp:include page="./includes/header.jsp" />
+
     <body>
     <div class="container"> 
-        <form method="post" action="SolrIndex">
-            <fieldset>
-                <legend>Solr</legend>
-                <p>Indexation d'un document via solr</p>
- 
-                <label for="solrId">Solr Id <span class="requis">*</span></label>
-                <input type="text" id="solrId" name="solrId" value="" size="20" maxlength="60" />
-                <br />
- 
-                <label for="file">Chemin du fichier <span class="requis">*</span></label>
-                <input type="text" id="file" name="file" value="" size="100" maxlength="100" />
-                <br />
- 
+        
+        <section>
+            <article>
+                <h1>Liste des documents contenus dans l'index Solr</h1>
+            
+                <c:choose>
+                    <c:when test="${!empty solrDocuments}">
+                        <ul class="list-group">
+                            <c:forEach items="${solrDocuments}" var="curDocument">
+                                <li>
+                                    <c:out value="${curDocument}" />
+                                </li>
+                            </c:forEach>
+                         </ul>    
+                    </c:when>
+                    <c:otherwise>
+                        <p>L'index Solr ne contient aucun document</p>
+                    </c:otherwise>
+                </c:choose>
+           
+            </article>
+            
+            <article>
+                <h1>Liste des documents contenus dans le dossier a indexer</h1>
+
+                <c:choose>
+                    <c:when test="${!empty toIndexDocuments}">
+                        <ul class="list-group">
+                            <c:forEach items="${toIndexDocuments}" var="curDocument">
+                                <li>
+                                    <c:out value="${curDocument}" />
+                                </li>
+                            </c:forEach>
+                         </ul>    
+                    </c:when>
+                    <c:otherwise>
+                        <p>Le dossier ne contient aucun document à indexer</p>
+                    </c:otherwise>
+                </c:choose>
+                        
+            </article>
+            
+    
+        </section>
+        
+        
+        <form role="form"  method="post" action="SolrIndex">
+                <legend>Indexation d'un document via solr</legend>
                 
- 
-                <input type="submit" value="Envoyer" />
-                <br />
-            </fieldset>
+                <div class="form-group">
+                    <label for="fileToExtract">Fichier a extraire</label>
+                    <input type="file" id="fileToExtract"name="fileToExtract">
+                    
+                </div>
+                
+                <button type="submit" class="btn btn-default"> Envoyer</button>
+           
         </form>
     </div>    
     </body>
