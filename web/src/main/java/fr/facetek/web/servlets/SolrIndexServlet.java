@@ -45,7 +45,7 @@ public class SolrIndexServlet extends HttpServlet {
 
         List< String > solrDocumentList = new ArrayList<>();
         try{
-            solrDocumentList = getListDocument();
+            solrDocumentList = getIndexedDocuments();
             for( String curDocument : solrDocumentList){
              
                  System.out.println(curDocument);
@@ -54,7 +54,7 @@ public class SolrIndexServlet extends HttpServlet {
             Logger.getLogger(SolrIndexServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         request.setAttribute("solrDocuments", solrDocumentList);
-        List<String> toIndexDocumentList = getDocumentToIndex();
+        List<String> toIndexDocumentList = getDocumentsToIndex();
         request.setAttribute("toIndexDocuments", toIndexDocumentList);
         
         this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );

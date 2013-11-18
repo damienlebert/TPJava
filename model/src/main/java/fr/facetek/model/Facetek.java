@@ -12,24 +12,24 @@ import java.util.List;
  * @author dlebert
  */
 public class Facetek {
-    private List<Utilisateur> listUtilisateurs = new ArrayList<>();
+    private List<User> listUtilisateurs = new ArrayList<>();
     
-    public List<Utilisateur> getListUtilisateur(){
+    public List<User> getListUtilisateur(){
         
         return this.listUtilisateurs;
     }
     
-    public Utilisateur getUtilisateur( int index ){
+    public User getUtilisateur( int index ){
         
         return this.listUtilisateurs.get(index);
     }
     
-    public void setListUtilisateurs( List<Utilisateur> utilisateurs ){
+    public void setListUtilisateurs( List<User> utilisateurs ){
         
         this.listUtilisateurs = utilisateurs;
     }
     
-    public void ajouterUtilisateur( Utilisateur utilisateur ){
+    public void ajouterUtilisateur( User utilisateur ){
         
         this.listUtilisateurs.add(utilisateur);
     }

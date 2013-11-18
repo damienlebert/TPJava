@@ -10,21 +10,21 @@ import java.util.Date;
  *
  * @author dlebert
  */
-public class Commentaire {
+public class Comment {
     
-    private Utilisateur auteur;
-    private String contenu;
+    private User author;
+    private String content;
     private Date date;
     private Message message;
 
-    public Utilisateur getAuteur() {
+    public User getAuthor() {
 
-        return this.auteur;
+        return this.author;
     }
 
-    public String getContenu() {
+    public String getContent() {
 
-        return this.contenu;
+        return this.content;
     }
     
     public Date getDate() {
@@ -36,14 +36,14 @@ public class Commentaire {
         return this.message;
     }
 
-    public void setAuteur(Utilisateur auteur) {
+    public void setAuthor(User author) {
 
-        this.auteur = auteur;
+        this.author = author;
     }
     
-    public void setContenu(String contenu) {
+    public void setContent(String content) {
 
-        this.contenu = contenu;
+        this.content = content;
     }
     
     public void setDate(Date date) {
@@ -57,9 +57,9 @@ public class Commentaire {
     
     @Override
     public String toString(){
-        String result = "\tCommentaire de " + this.auteur.getEtatCivil() + "\n" ;
+        String result = "\tCommentaire de " + this.author.getEtatCivil() + "\n" ;
         result += "\t" + this.date + "\n";
-        result += "\t" + this.contenu;
+        result += "\t" + this.content;
         
         return result;
     }

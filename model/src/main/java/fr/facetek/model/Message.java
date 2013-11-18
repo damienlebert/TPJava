@@ -4,7 +4,6 @@
  */
 package fr.facetek.model;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,20 +16,20 @@ import java.util.List;
  */
 public class Message {
     
-    private Utilisateur auteur;
-    private String contenu;
+    private User author;
+    private String content;
     private Date date;
-    private Mur mur;
-    private List<Commentaire> commentaires = new ArrayList<Commentaire>();
+    private Wall wall;
+    private List<Comment> comments = new ArrayList<>();
 
-    public Utilisateur getAuteur() {
+    public User getAuthor() {
 
-        return this.auteur;
+        return this.author;
     }
 
-    public String getContenu() {
+    public String getContent() {
 
-        return this.contenu;
+        return this.content;
     }
     
     public Date getDate() {
@@ -38,58 +37,58 @@ public class Message {
         return this.date;
     }
     
-    public Mur getMur() {
+    public Wall getWall() {
 
-        return this.mur;
+        return this.wall;
     }
     
-    public List<Commentaire> getCommentaire(){
+    public List<Comment> getCommentList(){
         
-        return this.commentaires;
+        return this.comments;
     }
     
-    public Commentaire getCommentaire( int index ){
+    public Comment getComment( int index ){
         
-        return this.commentaires.get(index);
+        return this.comments.get(index);
     }
 
-    public void setAuteur(Utilisateur auteur) {
+    public void setAuthor(User author) {
 
-        this.auteur = auteur;
+        this.author = author;
     }
     
-    public void setContenu(String contenu) {
+    public void setContent(String content) {
 
-        this.contenu = contenu;
+        this.content = content;
     }
     
     public void setDate(Date date) {
 
         this.date = date;
     }
-    public void setMur(Mur mur) {
+    public void setWall(Wall wall) {
 
-        this.mur = mur;
+        this.wall = wall;
     }
 
-    public void setCommentaire(List<Commentaire> commentaires){
+    public void setCommentList(List<Comment> commentList){
         
-        this.commentaires = commentaires;
+        this.comments = commentList;
     }
     
-    public void ajouterCommentaire(Commentaire commentaire){
+    public void addComment(Comment comment){
         
-        this.commentaires.add(commentaire);
+        this.comments.add(comment);
     }
     
-    public Commentaire getLastCommentaire(){
+    public Comment getLastComment(){
         
-        return this.commentaires.get(commentaires.size()-1);
+        return this.comments.get(comments.size()-1);
     }
     
-    public boolean contientCommentaire(Commentaire commentaire){
+    public boolean containComment(Comment commentaire){
         boolean result = false;
-        for (Commentaire commentaireMessage : this.commentaires){
+        for (Comment commentaireMessage : this.comments){
             if (commentaireMessage.equals(commentaire)){
                 
              result = true;   
@@ -100,11 +99,11 @@ public class Message {
     
     @Override
     public String toString(){
-        String result = "Message de " + this.auteur.getEtatCivil() + "\n" ;
+        String result = "Message de " + this.author.getEtatCivil() + "\n" ;
         result += this.date + "\n";
-        result += this.contenu + "\n";
+        result += this.content + "\n";
         
-        for (Commentaire commentaire : this.commentaires){
+        for (Comment commentaire : this.comments){
             
             result += commentaire.toString();
         }

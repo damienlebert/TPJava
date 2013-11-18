@@ -4,11 +4,11 @@
  */
 package fr.facetek.app;
 
-import fr.facetek.model.Commentaire;
+import fr.facetek.model.Comment;
 import fr.facetek.model.Facetek;
 import fr.facetek.model.Message;
 import fr.facetek.model.Relation;
-import fr.facetek.model.Utilisateur;
+import fr.facetek.model.User;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,22 +34,22 @@ public class FacetekTest {
         try {
             //Création des utilisateurs
             CsvInterface csvServiceLib = CsvFactory.getCsvServiceLib();
-            List<Utilisateur> listUtilisateurs = csvServiceLib.getUtilisateurs(pathTest);
+            List<User> listUtilisateurs = csvServiceLib.getUtilisateurs(pathTest);
             Facetek facetek = FacetekService.creerFacetek(listUtilisateurs);
             
             //Création des relations
             pathTest = "src/test/resources/relations.properties";
             PropertiesService.loadRelations(facetek, pathTest);
             
-            Utilisateur moi = FacetekService.getUtilisateurByLogin("dlebert", facetek);
-            Utilisateur unAmi = FacetekService.getUtilisateurByLogin("sdaclin", facetek);
-            Utilisateur unInconnu = FacetekService.getUtilisateurByLogin("avianey", facetek);
+            User moi = FacetekService.getUtilisateurByLogin("dlebert", facetek);
+            User unAmi = FacetekService.getUtilisateurByLogin("sdaclin", facetek);
+            User unInconnu = FacetekService.getUtilisateurByLogin("avianey", facetek);
             //Ecriture des messages
             
             String textMessage = "Je suis un super message de test sur mon propre mur";
             Message message = WallService.creerMessage(moi, textMessage);
             WallService.posterMessage(message);
-            assertTrue("Le message n'a pas été crée correctement", moi.getMur().contientMessage(message));
+            assertTrue("Le message n'a pas été crée correctement", moi.getWall().contientMessage(message));
 
             //Création d'un message sur le mur d'un ami
 
@@ -58,27 +58,27 @@ public class FacetekTest {
 
 
             WallService.posterMessage(message, unAmi);
-            assertTrue("Le message n'a pas été crée correctement", unAmi.getMur().contientMessage(message));
+            assertTrue("Le message n'a pas été crée correctement", unAmi.getWall().contientMessage(message));
 
             WallService.posterMessage(message, unInconnu);
-            assertFalse("Il devrai être impossible d'écrire sur le mur d'un inconnu", unInconnu.getMur().contientMessage(message));
+            assertFalse("Il devrai être impossible d'écrire sur le mur d'un inconnu", unInconnu.getWall().contientMessage(message));
 
 
             //Création d'un commentaire sur un message
 
             //Création du commentaire
             String textCommentaire = "Je suis un super Commentaire";
-            Commentaire commentaire = WallService.creerCommentaire(moi, textCommentaire);
+            Comment commentaire = WallService.creerCommentaire(moi, textCommentaire);
 
             //Commenter un post sur son mur 
-            message = moi.getMur().getLastMessage();
+            message = moi.getWall().getLastMessage();
             WallService.posterCommentaire(commentaire, message);
-            assertTrue("Le commentaire n'a pas été posté correctement", message.contientCommentaire(commentaire));
+            assertTrue("Le commentaire n'a pas été posté correctement", message.containComment(commentaire));
 
             //Commenter un post sur le mur d'un ami
-            message = unAmi.getMur().getLastMessage();
+            message = unAmi.getWall().getLastMessage();
             WallService.posterCommentaire(commentaire, message);
-            assertTrue("Le commentaire n'a pas été posté correctement", message.contientCommentaire(commentaire));
+            assertTrue("Le commentaire n'a pas été posté correctement", message.containComment(commentaire));
 
             //Création d'un message sur le mur de inconnu posté par un ami
             textMessage = "Mon ami écrit sur le mur d'un inconnu";
@@ -86,7 +86,7 @@ public class FacetekTest {
             WallService.posterMessage(message, unInconnu);
 
             WallService.posterCommentaire(commentaire, message);
-            assertTrue("Je devrai pouvoir commenter le message d'un ami sur le mur d'un inconnu", message.contientCommentaire(commentaire));
+            assertTrue("Je devrai pouvoir commenter le message d'un ami sur le mur d'un inconnu", message.containComment(commentaire));
 
             //Création d'un message sur le mur de inconnu posté par un inconnu
             textMessage = "Un inconnu écrit sur sont propre mur...";
@@ -94,7 +94,7 @@ public class FacetekTest {
             WallService.posterMessage(message);
 
             WallService.posterCommentaire(commentaire, message);
-            assertFalse("Je ne devrai pas pouvoir commenter le message d'un inconnu sur le mur d'un inconnu", message.contientCommentaire(commentaire));
+            assertFalse("Je ne devrai pas pouvoir commenter le message d'un inconnu sur le mur d'un inconnu", message.containComment(commentaire));
             
             //Affichage du résultat
             System.out.println(FacetekService.showEverything(facetek));        

@@ -4,7 +4,7 @@
  */
 package fr.facetek.app;
 
-import fr.facetek.model.Utilisateur;
+import fr.facetek.model.User;
 import java.io.IOException;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
@@ -20,9 +20,9 @@ import java.util.Scanner;
 public class CsvService implements CsvInterface{
     
     @Override
-    public List<Utilisateur> getUtilisateurs(String fileName) throws IOException{
+    public List<User> getUtilisateurs(String fileName) throws IOException{
         
-        List<Utilisateur> utilisateurs = new ArrayList<>();
+        List<User> utilisateurs = new ArrayList<>();
         
         FileSystem fs = FileSystems.getDefault();
         Path path = fs.getPath(fileName);
@@ -34,7 +34,7 @@ public class CsvService implements CsvInterface{
             
             while(scanner.hasNext()){
                 //parse line to get users
-                Utilisateur utilisateur = parseCSVLine(scanner.next());
+                User utilisateur = parseCSVLine(scanner.next());
                 utilisateurs.add(utilisateur);
             }
         }
@@ -43,7 +43,7 @@ public class CsvService implements CsvInterface{
        
     }
     
-    private static Utilisateur parseCSVLine(String line) {
+    private static User parseCSVLine(String line) {
          Scanner scanner = new Scanner(line);
          scanner.useDelimiter("\\s*;\\s*");
          // Login
@@ -56,7 +56,7 @@ public class CsvService implements CsvInterface{
          // Email ( login@astek.fr )
          String mail = login + "@astek.fr";
          
-         Utilisateur utilisateur = UtilisateurService.creerUtilisateur(nom, prenom, login, mail);
+         User utilisateur = UtilisateurService.createUser(nom, prenom);
          utilisateur.setLogin(login);
          utilisateur.setMail(mail);
          

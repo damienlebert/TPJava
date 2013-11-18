@@ -11,46 +11,45 @@ import fr.facetek.model.*;
  * @author dlebert
  */
 public class UtilisateurService {
-   
-    public static Utilisateur creerUtilisateur(String nom, String prenom){
+    
+    
+    /**
+     * Create a fr.facetek.model.User instance with given firstName and lastName
+     * @param firstName
+     * @param lastName
+     * @return The created user
+    */
+    public static User createUser(String firstName, String lastName){
         
-        Utilisateur utilisateur = new Utilisateur();
-        Mur mur = new Mur();
-        String login = prenom.charAt(0) + nom;
+        User user = new User();
+        Wall mur = new Wall();
+        String login = lastName.charAt(0) + firstName;
         login = login.toLowerCase();
         
         String mail = login + "@astek.fr";
         
-        utilisateur.setNom(nom);
-        utilisateur.setPrenom(prenom);
-        utilisateur.setLogin(login);
-        utilisateur.setMail(mail);
-        utilisateur.setMur(mur);
-        mur.setProprietaire(utilisateur);
+        user.setLastName(firstName);
+        user.setFirstName(lastName);
+        user.setLogin(login);
+        user.setMail(mail);
+        user.setWall(mur);
+        mur.setOwner(user);
         
-        return utilisateur;
-    }
-    
-    public static Utilisateur creerUtilisateur(String nom, String prenom, String login, String mail){
-        
-        Utilisateur utilisateur = new Utilisateur();
-        Mur mur = new Mur();
-        
-        utilisateur.setNom(nom);
-        utilisateur.setPrenom(prenom);
-        utilisateur.setLogin(login);
-        utilisateur.setMail(mail);
-        utilisateur.setMur(mur);
-        mur.setProprietaire(utilisateur);
-        
-        return utilisateur;
+        return user;
     }
 
-    public static Relation creerRelation(Utilisateur premierUtilisateur, Utilisateur secondUtilisateur) throws Exception{
+    /**
+     * Create a fr.facetek.model.Relation between the two fr.facetek.model.user given in parameter 
+     * @param premierUtilisateur
+     * @param secondUtilisateur
+     * @return The new fr.facetek.model.Relation
+     * @throws Exception 
+     */
+    public static Relation creerRelation(User premierUtilisateur, User secondUtilisateur) throws Exception{
         
         //Preconditions
         if(premierUtilisateur.enRelationAvec(secondUtilisateur)){
-            throw new Exception("Il existe déjà une relation entre ces deux utilisateur");
+            throw new Exception("These users are already related !");
         }
         
         //Traitement
@@ -64,11 +63,15 @@ public class UtilisateurService {
         return relation;
     }
     
-    // Retourne une chaine de caractère contenant les informations de l'utilisateur (nom, prenom, login, mail)
-    public static String getAllInfos(Utilisateur utilisateur){
+    /**
+     * Method to retrieve user info in a string version
+     * @param utilisateur
+     * @return A string containing all user infos
+    */
+    public static String getAllInfos(User utilisateur){
         
-        String result = "Nom : " + utilisateur.getNom() + "\n";
-        result += "Prenom : " + utilisateur.getPrenom() + "\n";
+        String result = "Nom : " + utilisateur.getLastName() + "\n";
+        result += "Prenom : " + utilisateur.getFirstName() + "\n";
         result += "Login : " + utilisateur.getLogin() + "\n";
         result += "Mail : " + utilisateur.getMail();
         
@@ -76,14 +79,23 @@ public class UtilisateurService {
         return result;
     }
         
-    //Retourne une chaine de caractère contenant le contenu du mur de l'utilisateur passé en paramètre    
-    public static String showMur(Utilisateur utilisateur){
+    //Retourne une chaine de caractère contenant le contenu du mur de l'utilisateur passé en paramètre 
+    /**
+     * Method to retrieve user wall in a string version
+     * @param utilisateur
+     * @return A string containing the user's wall
+     */
+    public static String showMur(User utilisateur){
         
-        return utilisateur.getMur().toString();
+        return utilisateur.getWall().toString();
     }
     
-    //Retourne une chaine de caractère contenant les relations de l'utilisateur passé en paramètre
-    public static String showRelations(Utilisateur utilisateur){
+    /**
+     * Method to retrieve user relations in a string version
+     * @param utilisateur
+     * @return A string containing all user relations
+     */
+    public static String showRelations(User utilisateur){
         String result = "Relations : \n";
         if (utilisateur.getRelations().isEmpty()){
             result += "Aucunes relations";

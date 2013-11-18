@@ -13,11 +13,11 @@ import java.util.Date;
  */
 public class WallService {
     
-    public static Message creerMessage(Utilisateur auteur, String contenu){
+    public static Message creerMessage(User auteur, String contenu){
         
         Message message = new Message();
-        message.setAuteur(auteur);
-        message.setContenu(contenu);
+        message.setAuthor(auteur);
+        message.setContent(contenu);
         message.setDate(new Date());
         
         return message;
@@ -25,20 +25,20 @@ public class WallService {
     
     //Poster un message sur son propre mur
     public static void posterMessage(Message message){
-        Utilisateur utilisateur = message.getAuteur();
-        Mur mur = utilisateur.getMur();
+        User utilisateur = message.getAuthor();
+        Wall mur = utilisateur.getWall();
         mur.ajouterMessage(message);
-        message.setMur(mur);
+        message.setWall(mur);
          
     }
     
     //Poster un message ur le mur d'un autre utilisateur
-    public static void posterMessage(Message message, Utilisateur utilisateurCible){
-        Utilisateur utilisateur = message.getAuteur();
+    public static void posterMessage(Message message, User utilisateurCible){
+        User utilisateur = message.getAuthor();
         if (utilisateur.enRelationAvec(utilisateurCible)){
-            Mur mur = utilisateurCible.getMur();
+            Wall mur = utilisateurCible.getWall();
             mur.ajouterMessage(message); 
-            message.setMur(mur);
+            message.setWall(mur);
         } else{
             
             System.out.println("Impossible d'écrire sur le mur d'un inconnu");
@@ -46,11 +46,11 @@ public class WallService {
     }
     
     
-    public static Commentaire creerCommentaire(Utilisateur auteur, String contenu){
+    public static Comment creerCommentaire(User auteur, String contenu){
         
-        Commentaire commentaire = new Commentaire();
-        commentaire.setAuteur(auteur);
-        commentaire.setContenu(contenu);
+        Comment commentaire = new Comment();
+        commentaire.setAuthor(auteur);
+        commentaire.setContent(contenu);
         commentaire.setDate(new Date());
         
         return commentaire;
@@ -58,12 +58,12 @@ public class WallService {
     
     // Poster un commentaire sur un message.
     // Retourne un message d'erreur si l'auteur n'est ni ami avec le propriétaire du mur sur lequel se trouve le message, ni ami avec l'auteur du message
-    public static void posterCommentaire(Commentaire commentaire, Message message){
-        Utilisateur source = commentaire.getAuteur();
-        Utilisateur cible = message.getMur().getProprietaire();
-        if (source.equals(cible) || cible.enRelationAvec(source) || source.enRelationAvec(message.getAuteur()) || source.equals(message.getAuteur())){
+    public static void posterCommentaire(Comment commentaire, Message message){
+        User source = commentaire.getAuthor();
+        User cible = message.getWall().getOwner();
+        if (source.equals(cible) || cible.enRelationAvec(source) || source.enRelationAvec(message.getAuthor()) || source.equals(message.getAuthor())){
             
-            message.ajouterCommentaire(commentaire);
+            message.addComment(commentaire);
             commentaire.setMessage(message);
         } else{
             

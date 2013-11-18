@@ -11,10 +11,10 @@ import java.util.List;
  *
  * @author dlebert
  */
-public class Mur {
+public class Wall {
     
     private List<Message> messages = new ArrayList<>();
-    private Utilisateur proprietaire;
+    private User owner;
     
     public List<Message> getMessages(){
         
@@ -26,9 +26,9 @@ public class Mur {
         return this.messages.get(index);
     }
     
-    public Utilisateur getProprietaire(){
+    public User getOwner(){
         
-        return this.proprietaire;
+        return this.owner;
     }
     
     
@@ -37,9 +37,9 @@ public class Mur {
         this.messages = messages;
     }
     
-    public void setProprietaire(Utilisateur proprietaire){
+    public void setOwner(User owner){
         
-        this.proprietaire = proprietaire;
+        this.owner = owner;
     }
     
     public void ajouterMessage(Message message){

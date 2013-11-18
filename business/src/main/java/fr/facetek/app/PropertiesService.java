@@ -6,7 +6,7 @@ package fr.facetek.app;
 
 import fr.facetek.model.Facetek;
 import fr.facetek.model.Relation;
-import fr.facetek.model.Utilisateur;
+import fr.facetek.model.User;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Iterator;
@@ -43,8 +43,8 @@ public class PropertiesService {
         while (it.hasNext()){
             String log = (String) it.next(); 
             String logAmi = properties.getProperty(log);
-            Utilisateur utilisateur = FacetekService.getUtilisateurByLogin(log, facetek);
-            Utilisateur utilisateurAmi = FacetekService.getUtilisateurByLogin(logAmi, facetek);
+            User utilisateur = FacetekService.getUtilisateurByLogin(log, facetek);
+            User utilisateurAmi = FacetekService.getUtilisateurByLogin(logAmi, facetek);
             UtilisateurService.creerRelation(utilisateur, utilisateurAmi);
         }
     }

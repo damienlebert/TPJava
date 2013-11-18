@@ -5,7 +5,7 @@
 package fr.facetek.app;
 
 import au.com.bytecode.opencsv.CSVReader;
-import fr.facetek.model.Utilisateur;
+import fr.facetek.model.User;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,11 +18,9 @@ import java.util.List;
 public class CsvServiceLib implements CsvInterface{
     
     @Override
-    public List<Utilisateur> getUtilisateurs(String fileName) throws IOException{
-       
-    
-            List<Utilisateur> utilisateurs = new ArrayList<>();
-            
+    public List<User> getUtilisateurs(String fileName) throws IOException{
+        
+            List<User> utilisateurs = new ArrayList<>();
             
             CSVReader reader = new CSVReader(new FileReader(fileName), ';');
             String [] nextLine;
@@ -38,7 +36,7 @@ public class CsvServiceLib implements CsvInterface{
                 prenom = prenom.replaceFirst(".",(prenom.charAt(0)+"").toUpperCase());
                 // Email
                 String mail = login + "@astek.fr";
-                Utilisateur utilisateur = UtilisateurService.creerUtilisateur(nom, prenom, login, mail);
+                User utilisateur = UtilisateurService.createUser(nom, prenom);
                 utilisateur.setLogin(login);
                 utilisateur.setMail(mail);
                

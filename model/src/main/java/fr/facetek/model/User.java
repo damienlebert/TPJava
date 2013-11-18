@@ -11,25 +11,25 @@ import java.util.List;
  *
  * @author dlebert
  */
-public class Utilisateur {
+public class User {
 
-    private String nom;
-    private String prenom;
+    private String lastName;
+    private String firstName;
     private String login;
     private String mail;
-    private Mur mur;
+    private Wall wall;
     private List<Relation> relations = new ArrayList<>();
 
     //Getter
     
-    public String getNom() {
+    public String getLastName() {
 
-        return this.nom;
+        return this.lastName;
     }
 
-    public String getPrenom() {
+    public String getFirstName() {
 
-        return this.prenom;
+        return this.firstName;
     }
     
     public String getLogin() {
@@ -42,9 +42,9 @@ public class Utilisateur {
         return this.mail;
     }
     
-    public Mur getMur() {
+    public Wall getWall() {
 
-        return this.mur;
+        return this.wall;
     }
     
     public List<Relation> getRelations(){
@@ -59,13 +59,13 @@ public class Utilisateur {
     
     //Setter
     
-    public void setNom(String nom) {
+    public void setLastName(String nom) {
 
-        this.nom = nom;
+        this.lastName = nom;
     }
-    public void setPrenom(String prenom) {
+    public void setFirstName(String prenom) {
 
-        this.prenom = prenom;
+        this.firstName = prenom;
     }
     public void setLogin(String login) {
 
@@ -76,9 +76,9 @@ public class Utilisateur {
         this.mail = mail;
     }
     
-    public void setMur(Mur mur) {
+    public void setWall(Wall mur) {
 
-        this.mur = mur;
+        this.wall = mur;
     }
     
     public void setRelations(List<Relation> relations){
@@ -92,7 +92,7 @@ public class Utilisateur {
         this.relations.add(relation);
     }
     
-    public boolean enRelationAvec(Utilisateur utilisateur){
+    public boolean enRelationAvec(User utilisateur){
         
         boolean result = false; 
         for (Relation relation : this.relations){
@@ -106,8 +106,8 @@ public class Utilisateur {
     
     public String getEtatCivil(){
     
-        String nomFormate = this.nom.toUpperCase();
-        String prenomFormate = this.prenom;
+        String nomFormate = this.lastName.toUpperCase();
+        String prenomFormate = this.firstName;
         
         return (nomFormate + " "  + prenomFormate);
     }
@@ -115,8 +115,8 @@ public class Utilisateur {
     @Override
     public String toString(){
         
-        String result = "Nom : " +this.nom + "\n";
-        result += "Prenom : " +this.prenom + "\n";
+        String result = "Nom : " +this.lastName + "\n";
+        result += "Prenom : " +this.firstName + "\n";
         result += "Login : " +this.login + "\n";
         result += "Mail : " +this.mail + "\n";
         

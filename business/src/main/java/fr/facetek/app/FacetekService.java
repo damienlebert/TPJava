@@ -5,7 +5,7 @@
 package fr.facetek.app;
 
 import fr.facetek.model.Facetek;
-import fr.facetek.model.Utilisateur;
+import fr.facetek.model.User;
 import java.util.List;
 
 /**
@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class FacetekService {
     
-    public static Facetek creerFacetek(List<Utilisateur> listUtilisateurs){
+    public static Facetek creerFacetek(List<User> listUtilisateurs){
         
         Facetek facetek = new Facetek();
         facetek.setListUtilisateurs(listUtilisateurs);
@@ -22,11 +22,11 @@ public class FacetekService {
         return facetek;
     }
     
-    // Retourne l'objet Utilisateur correspondant au login passé en paramètre 
+    // Retourne l'objet User correspondant au login passé en paramètre 
     // Retourne null si aucun utilisateur ne correspond
-    public static Utilisateur getUtilisateurByLogin(String login, Facetek facetek){
-        Utilisateur utilisateur = null;
-        for (Utilisateur curUtilisateur : facetek.getListUtilisateur()){
+    public static User getUtilisateurByLogin(String login, Facetek facetek){
+        User utilisateur = null;
+        for (User curUtilisateur : facetek.getListUtilisateur()){
             if ( curUtilisateur.getLogin().equalsIgnoreCase(login)){
                 utilisateur = curUtilisateur;
             }
@@ -37,7 +37,7 @@ public class FacetekService {
     // Retourne une chaine de caractère contenant les information de chaque utilisateur
     public static String showUtilisateurs(Facetek facetek){
         String result = "Utilisateurs de facetek :\n";
-        for (Utilisateur curUtilisateur : facetek.getListUtilisateur()){
+        for (User curUtilisateur : facetek.getListUtilisateur()){
             result += "====================================================== \n";
             result += UtilisateurService.getAllInfos(curUtilisateur);
             
@@ -50,7 +50,7 @@ public class FacetekService {
     //      - Le contenu de son mur
     public static String showEverything(Facetek facetek){
         String result = "Utilisateurs de facetek :\n";
-        for (Utilisateur curUtilisateur : facetek.getListUtilisateur()){
+        for (User curUtilisateur : facetek.getListUtilisateur()){
             result += "====================================================== \n";
             result += UtilisateurService.getAllInfos(curUtilisateur);
             result += UtilisateurService.showRelations(curUtilisateur);

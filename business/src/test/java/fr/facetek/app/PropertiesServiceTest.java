@@ -5,12 +5,9 @@
 package fr.facetek.app;
 
 import fr.facetek.model.Facetek;
-import fr.facetek.model.Utilisateur;
+import fr.facetek.model.User;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -26,7 +23,7 @@ public class PropertiesServiceTest {
          //Création des utilisateurs
         String pathTest = "src/test/resources/users.csv";
             CsvInterface csvServiceLib = CsvFactory.getCsvServiceLib();
-            List<Utilisateur> listUtilisateurs = csvServiceLib.getUtilisateurs(pathTest);
+            List<User> listUtilisateurs = csvServiceLib.getUtilisateurs(pathTest);
             Facetek facetek = FacetekService.creerFacetek(listUtilisateurs);
             
             //Création des relations
@@ -35,9 +32,9 @@ public class PropertiesServiceTest {
             
             
             
-            Utilisateur moi = FacetekService.getUtilisateurByLogin("dlebert", facetek);
-            Utilisateur unAmi = FacetekService.getUtilisateurByLogin("sdaclin", facetek);
-            Utilisateur unInconnu = FacetekService.getUtilisateurByLogin("avianey", facetek);
+            User moi = FacetekService.getUtilisateurByLogin("dlebert", facetek);
+            User unAmi = FacetekService.getUtilisateurByLogin("sdaclin", facetek);
+            User unInconnu = FacetekService.getUtilisateurByLogin("avianey", facetek);
             
             //On test que les relations ont bien été crées
             assertTrue("La relation n'a pas été crée correctement", moi.enRelationAvec(unAmi) );

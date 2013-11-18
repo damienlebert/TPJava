@@ -27,12 +27,12 @@ public class CsvServiceTest {
             CsvInterface csvServiceLib = CsvFactory.getCsvServiceLib();
             assertEquals("La classe de l'objet crée par la Factory ne correspond pas", csvService.getClass(), new CsvService().getClass());
             assertEquals("La classe de l'objet crée par la Factory ne correspond pas", csvServiceLib.getClass(), new CsvServiceLib().getClass());
-            ArrayList<Utilisateur> utilisateurs = new ArrayList(csvService.getUtilisateurs(pathTest));
-            ArrayList<Utilisateur> libUtilisateurs = new ArrayList(csvServiceLib.getUtilisateurs(pathTest));
+            ArrayList<User> utilisateurs = new ArrayList(csvService.getUtilisateurs(pathTest));
+            ArrayList<User> libUtilisateurs = new ArrayList(csvServiceLib.getUtilisateurs(pathTest));
       
             int i = 0;
-            for (Utilisateur utilisateur : utilisateurs){
-                Utilisateur libUtilisateur = libUtilisateurs.get(i);
+            for (User utilisateur : utilisateurs){
+                User libUtilisateur = libUtilisateurs.get(i);
                 assertEquals("Les 2 méthode de chargement du même fichier n'ont pas rendu le même résultat", UtilisateurService.getAllInfos(utilisateur), UtilisateurService.getAllInfos(libUtilisateur));
                 i++; 
             }

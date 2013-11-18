@@ -36,28 +36,24 @@ public class SolrService {
     private static final String dirFileToIndex = "C:/Travail/";
     
     /**
-    * Method to index all types of files into SolrService. 
-    * @param fileName
-    * @param solrId
+    * Method to index all pdf documents contain in the dirFileToIndex directory. 
     * @throws IOException
     * @throws SolrServerException
     */
 
-    
     public static void indexFile() throws SolrServerException, IOException{
         
-        List<String> listDocumentToIndex = getDocumentToIndex();
+        List<String> listDocumentToIndex = getDocumentsToIndex();
         ContentStreamUpdateRequest up = new ContentStreamUpdateRequest("/update/extract");
         for ( String curDocument : listDocumentToIndex){
             
             ContentStreamBase.FileStream csb = new ContentStreamBase.FileStream(new File(dirFileToIndex+curDocument)); 
             up.addContentStream((ContentStream)csb);
             up.setParam("literal.id", curDocument);
-            //up.setParam("Content-type", "application/pdf");
             up.setAction(AbstractUpdateRequest.ACTION.COMMIT, true, true);
             server.request(up);
         }
-       
+        server.optimize();
     }
     
     /**
@@ -71,18 +67,26 @@ public class SolrService {
         server.commit(); 
     }
     
-    public static List< String > getListDocument() throws SolrServerException{
+    /**
+     * Method to retrieve names of the pdf documents currently indexed in solr  
+     * @return The list of pdf files currently indexed in solr
+     * @throws SolrServerException 
+     */
+    
+    public static List< String > getIndexedDocuments() throws SolrServerException{
         
         List< String > listDocuments = new ArrayList<>();
         
+        // Creating query to select all document
         SolrQuery query = new SolrQuery("*:*");
         query.setRequestHandler("/select");
         query.setFields("id");
         QueryRequest request = new QueryRequest(query);
         
         QueryResponse response = request.process(server);
+        // If there is at least one result
         if (!response.getResults().isEmpty()){
-            
+            // Getting getting documents names
             for (SolrDocument curDocument : response.getResults()){
                 
                 listDocuments.add((String)curDocument.get("id"));
@@ -91,10 +95,14 @@ public class SolrService {
         return listDocuments;
     }
     
-    public static List< String > getDocumentToIndex(){
+    /**
+     * Method to retrieve names of the pdf documents contain in dirFileToIndex 
+     * @return The list of pdf files contain in dirFileToIndex
+     */
+    public static List< String > getDocumentsToIndex(){
         
         List<String> fileNameList = new ArrayList<>();
-        File dir = new File("C:/Travail");
+        File dir = new File(dirFileToIndex);
         File[] fileList = dir.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {

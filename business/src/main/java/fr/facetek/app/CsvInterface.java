@@ -4,14 +4,15 @@
  */
 package fr.facetek.app;
 
-import fr.facetek.model.Utilisateur;
+import fr.facetek.model.User;
 import java.io.IOException;
 import java.util.List;
 
 /**
  *
  * @author dlebert
+ * 
  */
 public interface CsvInterface {
-    public  List<Utilisateur> getUtilisateurs(String fileName) throws IOException;
+    public  List<User> getUtilisateurs(String fileName) throws IOException;
 }

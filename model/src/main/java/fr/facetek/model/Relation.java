@@ -10,18 +10,18 @@ package fr.facetek.model;
  */
 public class Relation {
     
-    private Utilisateur premierUtilisateur;
-    private Utilisateur secondUtilisateur;
+    private User premierUtilisateur;
+    private User secondUtilisateur;
     private String type;
 
     // Getter
     
-    public Utilisateur getPremierUtilisateur() {
+    public User getPremierUtilisateur() {
 
         return this.premierUtilisateur;
     }
 
-    public Utilisateur getSecondUtilisateur() {
+    public User getSecondUtilisateur() {
 
         return this.secondUtilisateur;
     }
@@ -33,11 +33,11 @@ public class Relation {
     
     //Setter
     
-    public void setPremierUtilisateur(Utilisateur premierUtilisateur) {
+    public void setPremierUtilisateur(User premierUtilisateur) {
 
         this.premierUtilisateur = premierUtilisateur;
     }
-    public void setSecondUtilisateur(Utilisateur secondUtilisateur) {
+    public void setSecondUtilisateur(User secondUtilisateur) {
 
         this.secondUtilisateur = secondUtilisateur;
     }
@@ -52,7 +52,7 @@ public class Relation {
         return(premierUtilisateur.getEtatCivil()+ " et " +  secondUtilisateur.getEtatCivil() + " sont " + this.type + "\n"); 
     }
     
-    public String toString(Utilisateur utilisateur){
+    public String toString(User utilisateur){
         
         String result;
         

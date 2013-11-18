@@ -8,6 +8,7 @@ package fr.facetek.app;
 import org.junit.Test;
 import fr.facetek.model.*;
 import org.junit.Assert;
+import static fr.facetek.app.UtilisateurService.*;
 
 /**
  *
@@ -23,25 +24,22 @@ public class UtilisateurServiceTest {
     @Test
     public void testUtilisateur() throws Exception {
        
-        // Test 1 : Utilisateur crée correctement   
-        Utilisateur unTest = UtilisateurService.creerUtilisateur("Lebert", "Damien");   
-        Assert.assertEquals("L'utilisateur n'a pas été crée correctement", "dlebert", unTest.getLogin());
+        // Test 1 : User crée correctement   
+        User firstUser = createUser("Lebert", "Damien");   
+        Assert.assertEquals("L'utilisateur n'a pas été crée correctement", "dlebert", firstUser.getLogin());
 
         // Test 2 : Relation entre deux utilisateurs
-        Utilisateur deuxTest = UtilisateurService.creerUtilisateur("The", "Naab");   
-        Relation relation = UtilisateurService.creerRelation(unTest, deuxTest);
-        System.out.println(relation.toString());
-        Assert.assertNotNull("Les utilisateurs n'ont pas été trouvé", relation.toString().matches(unTest.getEtatCivil() + " " + deuxTest.getEtatCivil() + " sont " + relation.getType()));
+        User secondUser = createUser("Test", "User");   
+        Relation relation =  creerRelation(firstUser, secondUser);
+        Assert.assertTrue("Les utilisateurs n'ont pas été trouvé", firstUser.enRelationAvec(secondUser));
         
         // Test 3 : Création d'une relation déjà existente
         try {
-            relation = UtilisateurService.creerRelation(unTest, deuxTest);
+            relation = creerRelation(firstUser, secondUser);
         } catch ( Exception e ){
             //expected
             relation = null;
         }
-        Assert.assertNull(relation);
-        
-        
+        Assert.assertNull("Il devrait être impossible de créer une relation déjà existente", relation);
     }    
 }
