@@ -55,5 +55,6 @@
     <module>model</module>
     <module>business</module>
     <module>web</module>
+    <module>webservice</module>
   </modules>
 </project>

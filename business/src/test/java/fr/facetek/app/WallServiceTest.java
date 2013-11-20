@@ -9,7 +9,7 @@ import fr.facetek.model.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import static fr.facetek.app.WallService.*;
-import static fr.facetek.app.UtilisateurService.*;
+import static fr.facetek.app.UserService.*;
 /**
  *
  * @author dlebert

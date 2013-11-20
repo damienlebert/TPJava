@@ -10,7 +10,7 @@ import fr.facetek.model.*;
  *
  * @author dlebert
  */
-public class UtilisateurService {
+public class UserService {
     
     
     /**

@@ -8,7 +8,7 @@ package fr.facetek.app;
 import org.junit.Test;
 import fr.facetek.model.*;
 import org.junit.Assert;
-import static fr.facetek.app.UtilisateurService.*;
+import static fr.facetek.app.UserService.*;
 
 /**
  *

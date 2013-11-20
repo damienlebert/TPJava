@@ -39,7 +39,7 @@ public class FacetekService {
         String result = "Utilisateurs de facetek :\n";
         for (User curUtilisateur : facetek.getListUtilisateur()){
             result += "====================================================== \n";
-            result += UtilisateurService.getAllInfos(curUtilisateur);
+            result += UserService.getAllInfos(curUtilisateur);
             
         }
         return result;
@@ -52,9 +52,9 @@ public class FacetekService {
         String result = "Utilisateurs de facetek :\n";
         for (User curUtilisateur : facetek.getListUtilisateur()){
             result += "====================================================== \n";
-            result += UtilisateurService.getAllInfos(curUtilisateur);
-            result += UtilisateurService.showRelations(curUtilisateur);
-            result += UtilisateurService.showMur(curUtilisateur);
+            result += UserService.getAllInfos(curUtilisateur);
+            result += UserService.showRelations(curUtilisateur);
+            result += UserService.showMur(curUtilisateur);
             
         }
         return result;

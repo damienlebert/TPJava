@@ -56,7 +56,7 @@ public class CsvService implements CsvInterface{
          // Email ( login@astek.fr )
          String mail = login + "@astek.fr";
          
-         User utilisateur = UtilisateurService.createUser(nom, prenom);
+         User utilisateur = UserService.createUser(nom, prenom);
          utilisateur.setLogin(login);
          utilisateur.setMail(mail);
          

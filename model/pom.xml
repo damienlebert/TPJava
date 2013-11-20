@@ -7,10 +7,8 @@
     <artifactId>facetek</artifactId>
     <version>0.1</version>
   </parent>
-  <groupId>fr.facetek</groupId>
   <artifactId>model</artifactId>
   <name>model</name>
-  <url>http://maven.apache.org</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>

@@ -33,7 +33,7 @@ public class CsvServiceTest {
             int i = 0;
             for (User utilisateur : utilisateurs){
                 User libUtilisateur = libUtilisateurs.get(i);
-                assertEquals("Les 2 méthode de chargement du même fichier n'ont pas rendu le même résultat", UtilisateurService.getAllInfos(utilisateur), UtilisateurService.getAllInfos(libUtilisateur));
+                assertEquals("Les 2 méthode de chargement du même fichier n'ont pas rendu le même résultat", UserService.getAllInfos(utilisateur), UserService.getAllInfos(libUtilisateur));
                 i++; 
             }
             

@@ -45,7 +45,7 @@ public class PropertiesService {
             String logAmi = properties.getProperty(log);
             User utilisateur = FacetekService.getUtilisateurByLogin(log, facetek);
             User utilisateurAmi = FacetekService.getUtilisateurByLogin(logAmi, facetek);
-            UtilisateurService.creerRelation(utilisateur, utilisateurAmi);
+            UserService.creerRelation(utilisateur, utilisateurAmi);
         }
     }
 }

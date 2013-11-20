@@ -36,7 +36,7 @@ public class CsvServiceLib implements CsvInterface{
                 prenom = prenom.replaceFirst(".",(prenom.charAt(0)+"").toUpperCase());
                 // Email
                 String mail = login + "@astek.fr";
-                User utilisateur = UtilisateurService.createUser(nom, prenom);
+                User utilisateur = UserService.createUser(nom, prenom);
                 utilisateur.setLogin(login);
                 utilisateur.setMail(mail);
                
